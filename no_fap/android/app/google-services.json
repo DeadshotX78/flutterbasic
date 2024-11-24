@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "939360157135",
+    "project_id": "no-fap-fb731",
+    "storage_bucket": "no-fap-fb731.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:939360157135:android:66a164d0ad61b7fe44a6ba",
+        "android_client_info": {
+          "package_name": "com.example.no_fap"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHRfHwjS-brti38WefCRp9c2ZvqS2494E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:939360157135:android:334151723099d1c144a6ba",
+        "android_client_info": {
+          "package_name": "nfp.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHRfHwjS-brti38WefCRp9c2ZvqS2494E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
