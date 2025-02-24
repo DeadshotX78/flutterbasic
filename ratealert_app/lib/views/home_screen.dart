@@ -1,4 +1,6 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:ratealert_app/providers/exchange_rate_provider.dart';
@@ -23,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
         amountController.text.isNotEmpty) {
       final provider =
           Provider.of<ExchangeRateProvider>(context, listen: false);
-      double amount = double.parse(amountController.text) ?? 1.0;
+      double amount = double.parse(amountController.text);
 
       if (provider.exchangeRate != null) {
         setState(() {
@@ -48,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
           return SingleChildScrollView(
             child: Center(
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(16.0),
                 child: ConstrainedBox(
                   constraints: BoxConstraints(
                     maxWidth: constraints.maxWidth > 600
@@ -104,11 +106,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       ElevatedButton(
                         onPressed: () => convertCurrency(),
                         child: const Text("Convert"),
-                      ),
+                      )
+                          .animate()
+                          .scale(duration: 200.ms, curve: Curves.easeOut),
                       const SizedBox(height: 16),
                       //loading indicator
                       if (exchangeRateProvider.isLoading)
-                        const Center(child: CircularProgressIndicator()),
+                        const Center(
+                          child: CircularProgressIndicator(),
+                        ).animate().fade(duration: 500.ms),
                       //error message
                       if (exchangeRateProvider.errorMessage != null)
                         Center(
@@ -116,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             exchangeRateProvider.errorMessage!,
                             style: TextStyle(color: Colors.red),
                           ),
-                        ),
+                        ).animate().shake(duration: 500.ms),
                       //converted amount
                       if (convertedAmount != null)
                         Padding(
@@ -127,8 +133,15 @@ class _HomeScreenState extends State<HomeScreen> {
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
-                          ),
+                          )
+                              .animate()
+                              .fadeIn(duration: 500.ms)
+                              .slideY(begin: 0.5, curve: Curves.easeOut),
                         ),
+                      SizedBox(height: 24),
+                      //historical exchange rate chart
+                      if (exchangeRateProvider.exchangeRate != null)
+                        _buildExchangeRateChart(exchangeRateProvider),
                     ],
                   ),
                 ),
@@ -137,6 +150,69 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         },
       ),
+    );
+  }
+
+  Widget _buildExchangeRateChart(ExchangeRateProvider provider) {
+    final rates = provider.exchangeRate!.rates.entries.toList();
+    rates.sort((a, b) => a.value.compareTo(b.value));
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Center(
+          child: const Text(
+            "Exchange Rate Trends",
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        SizedBox(
+          height: 300,
+          child: LineChart(
+            LineChartData(
+              gridData: FlGridData(show: true),
+              titlesData: FlTitlesData(
+                leftTitles: AxisTitles(
+                  sideTitles: SideTitles(showTitles: true, reservedSize: 40),
+                ),
+                bottomTitles: AxisTitles(
+                  sideTitles: SideTitles(
+                    showTitles: true,
+                    getTitlesWidget: (value, meta) {
+                      int index = value.toInt();
+                      if (index >= 0 && index < rates.length) {
+                        return Text(rates[index].key);
+                      }
+                      return const Text("");
+                    },
+                    reservedSize: 30,
+                  ),
+                ),
+              ),
+              borderData: FlBorderData(show: true),
+              lineBarsData: [
+                LineChartBarData(
+                  spots: rates
+                      .asMap()
+                      .entries
+                      .map((entry) => FlSpot(
+                          entry.key.toDouble(), entry.value.value.toDouble()))
+                      .toList(),
+                  isCurved: true,
+                  color: Colors.blue,
+                  barWidth: 3,
+                  isStrokeCapRound: true,
+                  belowBarData: BarAreaData(show: false),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
