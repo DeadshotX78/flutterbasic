@@ -83,7 +83,6 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 //logo
                 Lottie.asset('assets/animations/welcome.json'),
-
                 const SizedBox(
                   height: 20,
                 ),

@@ -3,9 +3,7 @@
 import 'package:auth_app/components/my_button.dart';
 import 'package:auth_app/components/my_textfield.dart';
 import 'package:auth_app/components/square_tile.dart';
-
 import 'package:auth_app/services/auth_service.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -24,7 +22,6 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   //text editing
   final emailController = TextEditingController();
-
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
