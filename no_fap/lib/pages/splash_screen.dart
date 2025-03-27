@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen>
       (status) {
         if (status == AnimationStatus.completed) {
           Future.delayed(
-            const Duration(seconds: 3),
+            const Duration(seconds: 5),
             () {
               if (mounted) {
                 Navigator.push(
