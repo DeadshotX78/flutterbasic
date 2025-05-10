@@ -1,0 +1,2 @@
+C:/Users/nwach/Documents/flutterbasic/bloc_tute/android/app/.cxx/Debug/2e6e2u6b/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/Users/nwach/Documents/flutterbasic/bloc_tute/android/app/.cxx/Debug/2e6e2u6b/arm64-v8a/CMakeFiles/rebuild_cache.dir
